@@ -1,0 +1,14 @@
+{
+  "validUser": {
+    "username": "qauser1788177757",
+    "password": "Qa!23456Z"
+  },
+  "invalidUser": {
+    "username": "invalid_qa",
+    "password": "Admintest@123"
+  },
+  "invalidPassword": {
+    "username": "adminbook",
+    "password": "InvalidPassword123!"
+  }
+}
