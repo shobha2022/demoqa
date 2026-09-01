@@ -11,4 +11,4 @@ DELETE	/booking/:id	Delete booking
 GET	/booking/:id	Verify 404 after delete
 Run with:
 
-npx playwright test restful-booker.api.spec.ts
+npx playwright test AIgeneratedTests.ts
