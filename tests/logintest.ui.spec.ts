@@ -40,7 +40,8 @@ test.describe('Login Test Functional Suite', () => {
     await loginPage.login(typedUsers.validUser.username, typedUsers.validUser.password);
 
     const pageTitle = await page.title();
-    expect(pageTitle).toContain('demosite');
+    await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible({ timeout: 10000 });
+    
   });
 
 });

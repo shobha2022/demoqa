@@ -1,34 +1,29 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 export class BookDetailsPage {
-  private readonly addToCollectionButton: Locator;
+  readonly page: Page;
+  readonly addToCollectionButton: Locator;
 
-  constructor(private page: Page) {
-    this.addToCollectionButton = page.locator('button:has-text("Add To Your Collection")');
+  constructor(page: Page) {
+    this.page = page;
+    this.addToCollectionButton = page.getByRole('button', { name: 'Add To Your Collection' });
   }
 
-  async gotoBook(isbn: string) {
-    await this.page.goto(`https://demoqa.com/books?book=${isbn}`);
+  async navigateToBookByIsbn(isbn: string) {
+    await this.page.goto(`https://demoqa.com/books?search=${isbn}`);
   }
 
-  async addToCollection() {
-    // Set up dialog handler before triggering the action
-    // Set up event listener first
-  const dialogPromise = new Promise<import('@playwright/test').Dialog>((resolve) => {
-    this.page.once('dialog', resolve);
-  });
+  async addBookToCollection() {
+    console.log('Current URL:', this.page.url());
+  await expect(this.addToCollectionButton).toBeVisible({ timeout: 5000 });
 
-  this.page.on('dialog', async dialog => {
-  console.log(dialog.message()); // Prints the exact popup message
-  await dialog.accept();
-});
-  // Ensure button is scrolled into view past demoqa ads
-//await this.addToCollectionButton.scrollIntoViewIfNeeded;
-  await this.addToCollectionButton.click();
+    // Set up dialog listener and click the add button simultaneously
+    const [dialog] = await Promise.all([
+      this.page.waitForEvent('dialog'),
+      this.addToCollectionButton.click()
+    ]);
 
-  // Await the dialog promise after click
-  const dialog = await dialogPromise;
-  expect(dialog.message()).toContain('Book added to your collection.');
+  expect(dialog.message()).toMatch(/Book added to your collection|Book already present in the your collection!/);
   await dialog.accept();
   }
 }

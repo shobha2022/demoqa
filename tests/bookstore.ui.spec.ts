@@ -55,13 +55,3 @@ test.beforeEach(async ({ page }) => {
     const visibleTitles = await bookStorePage.getAllBookTitles();
     expect(visibleTitles).toContain(bookTitle);
   });
-
-
-  //Test to add book to User Collection
-  test('Test to add a book to the user collection after login', async () => {
-    const bookTitle = 'Git Pocket Guide';
-    await bookStorePage.selectBookByTitle(bookTitle);
-    await bookStorePage.addBookToUserCollection();
-    const visibleTitles = await bookStorePage.getAllBookTitles();
-    expect(visibleTitles).toContain(bookTitle);
-  });

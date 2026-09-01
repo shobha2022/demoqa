@@ -15,9 +15,6 @@ export class BookStorePage extends BasePage {
     this.noDataRow = page.locator('.rt-noData');
   }
 
-  async goto() {
-    await this.page.goto('https://demoqa.com/books');
-  }
 
   async getAllBookTitles(): Promise<string[]> {
     const titles = await this.bookTitles.allTextContents();
@@ -53,4 +50,6 @@ export class BookStorePage extends BasePage {
   async getNoDataText(): Promise<string> {
     return this.noDataRow.innerText();
   }
+
+  
 }
